@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PHP Example</title>
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="navbar navbar-expand navbar-dark bg-primary">
+    <div class="container">
+        <span class="navbar-brand">PHP</span>
+        <div class="navbar-nav text-uppercase">
+            <a class="nav-item nav-link {%if is_current_url('show-all-products') %}active{% endif%}" href="{{ url_for('show-all-products') | escape }}">All Products</a>
+            <a class="nav-item nav-link {%if is_current_url('split-products-by-pages') %}active{% endif%}" href="{{ url_for('split-products-by-pages') | escape }}">Pages</a>
+            <a class="nav-item nav-link {%if is_current_url('search-products') %}active{% endif%}" href="{{ url_for('search-products') | escape }}">Search</a>
+        </div>
+    </div>
+</div>
+
+<div class="container p-5">
+    {% block content %}{% endblock %}
+</div>
+<script src="/static/script.js"></script>
+</body>
+</html>

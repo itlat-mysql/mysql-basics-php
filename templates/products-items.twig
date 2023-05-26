@@ -1,0 +1,83 @@
+<table class="table table-bordered table-striped mb-0" id="products-container">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>EAN</th>
+            <th>PRICE</th>
+            <th>
+                {% if enable_search_logic %}
+                    <a href="{{ url_for('search-products') | escape }}" class="btn btn-sm btn-danger w-100">Reset</a>
+                {% endif %}
+            </th>
+        </tr>
+        {% if enable_search_logic %}
+        <tr>
+            <th><input
+                    class="form-control form-control-sm search-param"
+                    type="text"
+                    value="{% if queryParams.id is defined and queryParams.id is not iterable %}{{ queryParams.id | escape }}{% endif %}"
+                    name="id"></th>
+            <th><input
+                    class="form-control form-control-sm search-param"
+                    type="text"
+                    value="{% if queryParams.name is defined and queryParams.name is not iterable %}{{ queryParams.name | escape }}{% endif %}"
+                    name="name"></th>
+            <th><input
+                    class="form-control form-control-sm search-param"
+                    type="text"
+                    value="{% if queryParams.ean is defined and queryParams.ean is not iterable %}{{ queryParams.ean | escape }}{% endif %}"
+                    name="ean"></th>
+            <th>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text"><small>from</small></span>
+                            <input
+                                class="form-control form-control-sm search-param"
+                                type="text"
+                                value="{% if queryParams.price_gte is defined and queryParams.price_gte is not iterable %}{{ queryParams.price_gte | escape }}{% endif %}"
+                                name="price_gte">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text"><small>to</small></span>
+                            <input
+                                class="form-control form-control-sm search-param"
+                                type="text"
+                                value="{% if queryParams.price_lte is defined and queryParams.price_lte is not iterable %}{{ queryParams.price_lte | escape }}{% endif %}"
+                                name="price_lte">
+                        </div>
+                    </div>
+                </div>
+            </th>
+            <th>
+                <button
+                    class="btn btn-sm btn-primary w-100"
+                    id="search-products"
+                    data-js-search-route="{{ url_for('search-products') | escape }}">Search</button>
+            </th>
+        </tr>
+        {% endif %}
+    </thead>
+    <tbody>
+        {% if products %}
+            {% for product in products -%}
+                <tr>
+                    <td class="align-middle">{{ product.id | escape }}</td>
+                    <td class="align-middle">{{ product.name | escape }}</td>
+                    <td class="align-middle">{{ product.ean | escape }}</td>
+                    <td class="align-middle">{{ product.price | escape }}</td>
+                    <td class="text-center"><a href="{{ url_for('show-single-product', {id:product.id}) | escape }}">Show</a></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5">
+                    <div class="text-center text-uppercase">Products are not available.</div>
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>

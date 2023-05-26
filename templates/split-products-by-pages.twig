@@ -1,0 +1,20 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<div>
+    {{ include('products-items.twig') }}
+
+    {% if pages %}
+    <div class="mt-3 d-flex justify-content-center">
+        <ul class="pagination">
+            {% for i in 1..pages %}
+            <li class="page-item">
+                <a class="page-link {% if page == i %}active{% endif %}" href="{{ url_for('split-products-by-pages') }}?page={{ i }}">{{ i }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
